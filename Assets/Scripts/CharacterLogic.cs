@@ -6,6 +6,7 @@ public class CharacterLogic : MonoBehaviour
     private Vector2 input;
     Rigidbody rb;
     [SerializeField] float speed;
+    [SerializeField] Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class CharacterLogic : MonoBehaviour
     {
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
+        animator.SetFloat("moveSpeed", input.magnitude);
     }
 
     private void FixedUpdate()
