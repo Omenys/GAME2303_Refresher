@@ -271,8 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  jumpStrength: 5
+  jumpStrength: 3.5
   animator: {fileID: 1628373117}
+  Ground:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 1
 --- !u!1 &374801630
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +289,7 @@ GameObject:
   - component: {fileID: 374801634}
   - component: {fileID: 374801633}
   - component: {fileID: 374801632}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,6 +533,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: be6ab851bbb1c47438ec935188467dac, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 7038cd6dbe5598141abfbb98bf8c6dca, type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

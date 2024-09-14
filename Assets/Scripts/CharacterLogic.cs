@@ -12,6 +12,10 @@ public class CharacterLogic : MonoBehaviour
 
     IA_PlayerActions playerActions;
 
+    [SerializeField] LayerMask Ground;
+    [SerializeField] float groundCheckDistance = 1;
+    private bool onGround;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +31,30 @@ public class CharacterLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit hit = new RaycastHit();
+        // Raycast ground check
+        if (Physics.Raycast(transform.position, Vector3.up * -1, out hit, Ground))
+        {
+            if (hit.transform.tag == "Ground")
+            {
+                onGround = true;
+            }
+        }
+
+
+        Debug.DrawLine(transform.position, // start position
+           transform.position + (transform.up * -groundCheckDistance), // end position
+           Color.red);
+
         // New Imput system movement
         input = playerActions.Player.Move.ReadValue<Vector2>();
 
         // Old input system
         //input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
+        //Walk animation
         animator.SetFloat("moveSpeed", input.magnitude);
+
 
         // Face character in direction of travel
         Vector3 direction = GetCameraBasedInput(input, Camera.main);
@@ -69,9 +90,12 @@ public class CharacterLogic : MonoBehaviour
     {
         if (ctx.performed)
         {
-            Debug.Log("Press Jump");
+            //Debug.Log("Press Jump");
+            animator.SetTrigger("Jump");
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
+
         }
+
     }
 
 }
