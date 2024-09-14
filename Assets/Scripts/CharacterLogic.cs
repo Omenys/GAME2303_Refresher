@@ -7,6 +7,7 @@ public class CharacterLogic : MonoBehaviour
     private Vector2 input;
     Rigidbody rb;
     [SerializeField] float speed;
+    [SerializeField] float jumpStrength;
     [SerializeField] Animator animator;
 
     IA_PlayerActions playerActions;
@@ -69,7 +70,7 @@ public class CharacterLogic : MonoBehaviour
         if (ctx.performed)
         {
             Debug.Log("Press Jump");
-            rb.AddForce(Vector3.up * 20, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
         }
     }
 
