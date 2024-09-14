@@ -12,10 +12,6 @@ public class CharacterLogic : MonoBehaviour
 
     IA_PlayerActions playerActions;
 
-    [SerializeField] LayerMask Ground;
-    [SerializeField] float groundCheckDistance = 1;
-    private bool onGround;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,21 +27,6 @@ public class CharacterLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit = new RaycastHit();
-        // Raycast ground check
-        if (Physics.Raycast(transform.position, Vector3.up * -1, out hit, Ground))
-        {
-            if (hit.transform.tag == "Ground")
-            {
-                onGround = true;
-            }
-        }
-
-
-        Debug.DrawLine(transform.position, // start position
-           transform.position + (transform.up * -groundCheckDistance), // end position
-           Color.red);
-
         // New Imput system movement
         input = playerActions.Player.Move.ReadValue<Vector2>();
 
@@ -57,9 +38,14 @@ public class CharacterLogic : MonoBehaviour
 
 
         // Face character in direction of travel
+
+
         Vector3 direction = GetCameraBasedInput(input, Camera.main);
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+        }
 
     }
 
@@ -69,6 +55,7 @@ public class CharacterLogic : MonoBehaviour
         var newInput = GetCameraBasedInput(input, Camera.main);
         var newVelocity = new Vector3(newInput.x * speed * Time.fixedDeltaTime, rb.velocity.y, newInput.z * speed * Time.fixedDeltaTime);
         rb.velocity = newVelocity;
+
     }
 
     // Camera based movement logic
@@ -90,12 +77,16 @@ public class CharacterLogic : MonoBehaviour
     {
         if (ctx.performed)
         {
-            //Debug.Log("Press Jump");
             animator.SetTrigger("Jump");
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
 
         }
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Hit something");
     }
 
 }
