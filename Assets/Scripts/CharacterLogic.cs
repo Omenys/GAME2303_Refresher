@@ -33,6 +33,12 @@ public class CharacterLogic : MonoBehaviour
         //input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         animator.SetFloat("moveSpeed", input.magnitude);
+
+        // Face character in direction of travel
+        Vector3 direction = GetCameraBasedInput(input, Camera.main);
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+
     }
 
     private void FixedUpdate()
