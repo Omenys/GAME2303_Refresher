@@ -14,6 +14,7 @@ public class CharacterLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Input Actions
         playerActions = new IA_PlayerActions();
         playerActions.Player.Enable();
 
@@ -25,18 +26,24 @@ public class CharacterLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        // New Imput system movement
+        input = playerActions.Player.Move.ReadValue<Vector2>();
+
+        // Old input system
+        //input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         animator.SetFloat("moveSpeed", input.magnitude);
     }
 
     private void FixedUpdate()
     {
+        // Camera based movement
         var newInput = GetCameraBasedInput(input, Camera.main);
         var newVelocity = new Vector3(newInput.x * speed * Time.fixedDeltaTime, rb.velocity.y, newInput.z * speed * Time.fixedDeltaTime);
         rb.velocity = newVelocity;
     }
 
+    // Camera based movement logic
     Vector3 GetCameraBasedInput(Vector2 input, Camera cam)
     {
         Vector3 camRight = cam.transform.right;
@@ -50,6 +57,7 @@ public class CharacterLogic : MonoBehaviour
         return (input.x * camRight) + (input.y * camForward);
     }
 
+    // Jump
     public void OnJump(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
