@@ -38,8 +38,6 @@ public class CharacterLogic : MonoBehaviour
 
 
         // Face character in direction of travel
-
-
         Vector3 direction = GetCameraBasedInput(input, Camera.main);
         if (direction != Vector3.zero)
         {
@@ -82,11 +80,6 @@ public class CharacterLogic : MonoBehaviour
 
         }
 
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Hit something");
     }
 
 }
