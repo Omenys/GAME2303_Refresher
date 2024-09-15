@@ -6,8 +6,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] Stat currentHealth;
     [SerializeField] Animator animator;
 
-    float timeToDecrease = 0.5f;
-    int healthToDecrease = 5;
+    float timeToDecrease = 2.0f;
+    int healthToDecrease = 10;
 
 
     // Reference to coroutine
