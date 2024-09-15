@@ -15,4 +15,6 @@ public class TriggerZone : MonoBehaviour
         OnExit?.Invoke();
 
     }
+
+
 }
