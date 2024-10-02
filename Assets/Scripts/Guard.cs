@@ -1,0 +1,21 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Guard : MonoBehaviour
+{
+
+    [SerializeField] NavMeshAgent agent;
+    [SerializeField] Transform target;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        agent.SetDestination(target.position);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}
