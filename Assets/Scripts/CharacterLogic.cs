@@ -1,6 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
+//using UnityEngine.InputSystem;
 public class CharacterLogic : MonoBehaviour
 
 {
@@ -21,7 +20,7 @@ public class CharacterLogic : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
 
-        playerActions.Player.Jump.performed += OnJump;
+        // playerActions.Player.Jump.performed += OnJump;
     }
 
     // Update is called once per frame
@@ -71,7 +70,7 @@ public class CharacterLogic : MonoBehaviour
     }
 
     // Jump
-    public void OnJump(InputAction.CallbackContext ctx)
+    /*public void OnJump(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
@@ -80,7 +79,7 @@ public class CharacterLogic : MonoBehaviour
 
         }
 
-    }
+    }*/
 
 
 }
