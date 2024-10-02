@@ -1,5 +1,5 @@
 using UnityEngine;
-//using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;
 public class CharacterLogic : MonoBehaviour
 
 {
@@ -21,6 +21,7 @@ public class CharacterLogic : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         // playerActions.Player.Jump.performed += OnJump;
+        playerActions.Player.Sneak.performed += OnSneak;
     }
 
     // Update is called once per frame
@@ -81,5 +82,14 @@ public class CharacterLogic : MonoBehaviour
 
     }*/
 
+    public void OnSneak(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
 
+
+        }
+
+
+    }
 }
