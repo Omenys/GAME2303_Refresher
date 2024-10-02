@@ -1,7 +1,16 @@
 using UnityEngine;
+
+public enum GuardState
+{
+    IDLE,
+    PATROL,
+    INVESTIGATE,
+    PURSUE
+}
 public class LineOfSight : MonoBehaviour
 {
     [SerializeField] Transform target;
+    GuardState state = GuardState.IDLE;
 
     // Start is called before the first frame update
     void Start()
@@ -17,5 +26,40 @@ public class LineOfSight : MonoBehaviour
 
         float dot = Vector3.Dot(forwardDirection, directionToTarget);
         Debug.Log(dot);
+
+        switch (state)
+        {
+            case GuardState.IDLE:
+                UpdateIdle();
+                break;
+            case GuardState.INVESTIGATE:
+                UpdateInvestigate();
+                break;
+            case GuardState.PURSUE:
+                UpdatePursue();
+                break;
+            case GuardState.PATROL:
+                UpdatePatrol();
+                break;
+        }
+    }
+
+    void UpdateIdle()
+    {
+        Debug.Log("Idle");
+
+    }
+    void UpdatePatrol()
+    {
+        Debug.Log("Patroling");
+    }
+
+    void UpdateInvestigate()
+    {
+        Debug.Log("Investigating");
+    }
+    void UpdatePursue()
+    {
+        Debug.Log("Pursuing");
     }
 }
