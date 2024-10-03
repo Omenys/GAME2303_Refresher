@@ -25,7 +25,7 @@ public class LineOfSight : MonoBehaviour
         Vector3 forwardDirection = transform.forward;
 
         float dot = Vector3.Dot(forwardDirection, directionToTarget);
-        Debug.Log(dot);
+        //Debug.Log(dot);
 
         switch (state)
         {
@@ -46,7 +46,7 @@ public class LineOfSight : MonoBehaviour
 
     void UpdateIdle()
     {
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
 
     }
     void UpdatePatrol()

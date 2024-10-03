@@ -6,9 +6,11 @@ public class CharacterLogic : MonoBehaviour
     private Vector2 input;
     Rigidbody rb;
     [SerializeField] float speed;
+    [SerializeField] float sneakSpeed;
     [SerializeField] float jumpStrength;
     [SerializeField] Animator animator;
 
+    bool isSneaking = false;
     IA_PlayerActions playerActions;
 
     // Start is called before the first frame update
@@ -22,6 +24,7 @@ public class CharacterLogic : MonoBehaviour
 
         // playerActions.Player.Jump.performed += OnJump;
         playerActions.Player.Sneak.performed += OnSneak;
+        playerActions.Player.Sneak.canceled += OnSneak;
     }
 
     // Update is called once per frame
@@ -51,7 +54,10 @@ public class CharacterLogic : MonoBehaviour
     {
         // Camera based movement
         var newInput = GetCameraBasedInput(input, Camera.main);
-        var newVelocity = new Vector3(newInput.x * speed * Time.fixedDeltaTime, rb.velocity.y, newInput.z * speed * Time.fixedDeltaTime);
+
+        // Reduce speed if sneaking
+        float currentSpeed = isSneaking ? sneakSpeed : speed;
+        var newVelocity = new Vector3(newInput.x * currentSpeed * Time.fixedDeltaTime, rb.velocity.y, newInput.z * currentSpeed * Time.fixedDeltaTime);
         rb.velocity = newVelocity;
 
     }
@@ -82,12 +88,21 @@ public class CharacterLogic : MonoBehaviour
 
     }*/
 
+    // Sneak
     public void OnSneak(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
+            isSneaking = true; ;
+            Debug.Log("Sneaking");
+            animator.SetBool("isSneaking", true);
 
-
+        }
+        if (ctx.canceled)
+        {
+            isSneaking = false;
+            Debug.Log("Stopped sneaking");
+            animator.SetBool("isSneaking", false);
         }
 
 

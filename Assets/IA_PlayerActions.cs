@@ -51,7 +51,7 @@ public partial class @IA_PlayerActions: IInputActionCollection2, IDisposable
                     ""id"": ""e35c9d62-79a9-4a51-99e7-da5455243c4b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.1)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -147,8 +147,8 @@ public partial class @IA_PlayerActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a478dbad-3b30-45ab-9002-35a443dc27ea"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""Hold,Press"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sneak"",
@@ -159,7 +159,7 @@ public partial class @IA_PlayerActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0f5a45e0-1766-426a-b745-4ddeddb615bf"",
                     ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": ""Hold,Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sneak"",
