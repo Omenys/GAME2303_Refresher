@@ -6,10 +6,14 @@ public class Guard : MonoBehaviour
 {
 
     [SerializeField] NavMeshAgent agent;
-    //[SerializeField] Transform target;
     [SerializeField] float speed;
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] float pauseTime;
+
+    LineOfSight sight;
+
+    GuardState state = GuardState.IDLE;
+
     int destPoint = 0;
     bool isPaused = false;
 
@@ -21,8 +25,6 @@ public class Guard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        rb = GetComponent<Rigidbody>();
         navPath = new NavMeshPath();
 
         GoToNextPoint();
@@ -32,9 +34,26 @@ public class Guard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!agent.pathPending && agent.remainingDistance < 1 && !isPaused)
         {
             StartCoroutine(PauseAtPoint());
+        }
+
+        switch (state)
+        {
+            case GuardState.IDLE:
+                Idle();
+                break;
+            case GuardState.INVESTIGATE:
+                Investigate();
+                break;
+            case GuardState.PURSUE:
+                Pursue();
+                break;
+            case GuardState.PATROL:
+                Patrol();
+                break;
         }
 
     }
@@ -51,6 +70,35 @@ public class Guard : MonoBehaviour
         {
             Gizmos.DrawWireSphere(node, 0.5f);
         }
+    }
+
+    void Idle()
+    {
+        //Debug.Log("Idle");
+
+    }
+    void Patrol()
+    {
+        Debug.Log("Patroling");
+        if (sight.playerInSight)
+        {
+            state = GuardState.PURSUE;
+        }
+        else
+        {
+            state = GuardState.PATROL;
+        }
+    }
+
+    void Investigate()
+    {
+        Debug.Log("Investigating");
+    }
+    void Pursue()
+    {
+        Debug.Log("Pursuing");
+
+
     }
 
     void GoToNextPoint()
@@ -78,4 +126,6 @@ public class Guard : MonoBehaviour
         GoToNextPoint();
         isPaused = false;
     }
+
+
 }
