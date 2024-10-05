@@ -10,7 +10,7 @@ public enum GuardState
 public class LineOfSight : MonoBehaviour
 {
     [SerializeField] Transform target;
-    GuardState state = GuardState.IDLE;
+    GuardState state = GuardState.PATROL;
 
     bool playerInSight = false;
 
@@ -73,4 +73,5 @@ public class LineOfSight : MonoBehaviour
     {
         Debug.Log("Pursuing");
     }
+
 }
