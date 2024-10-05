@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,12 +5,17 @@ public class Guard : MonoBehaviour
 {
 
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] Transform target;
+    //[SerializeField] Transform target;
     [SerializeField] float speed;
+    [SerializeField] Transform[] patrolPoints;
+    int destPoint = 0;
+
+
     Rigidbody rb;
     NavMeshPath navPath;
-    Queue<Vector3> remainingPoints;
-    Vector3 currentTargetPoint;
+    //Queue<Vector3> remainingPoints;
+    //Vector3 currentTargetPoint;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +23,11 @@ public class Guard : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         navPath = new NavMeshPath();
-        remainingPoints = new Queue<Vector3>();
+        agent.autoBraking = true;
 
-        if (agent.CalculatePath(target.position, navPath))
+        //remainingPoints = new Queue<Vector3>();
+
+        /*if (agent.CalculatePath(target.position, navPath))
         {
             Debug.Log("Found path to target");
             foreach (Vector3 p in navPath.corners)
@@ -29,7 +35,10 @@ public class Guard : MonoBehaviour
                 remainingPoints.Enqueue(p);
             }
             currentTargetPoint = remainingPoints.Dequeue();
-        }
+        }*/
+
+        GoToNextPoint();
+
     }
 
     // Update is called once per frame
@@ -37,14 +46,19 @@ public class Guard : MonoBehaviour
     {
         //agent.SetDestination(target.position);
 
-        var newForward = (currentTargetPoint - transform.position).normalized;
-        newForward.y = 0;
-        transform.forward = newForward;
+        /* var newForward = (currentTargetPoint - transform.position).normalized;
+         newForward.y = 0;
+         transform.forward = newForward; *
 
-        float distToPoint = Vector3.Distance(transform.position, currentTargetPoint);
-        if (distToPoint < 1)
+         float distToPoint = Vector3.Distance(transform.position, currentTargetPoint);
+         /*if (distToPoint < 1)
+         {
+             currentTargetPoint = remainingPoints.Dequeue();
+         }*/
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5)
         {
-            currentTargetPoint = remainingPoints.Dequeue();
+            GoToNextPoint();
         }
     }
 
@@ -65,5 +79,20 @@ public class Guard : MonoBehaviour
         {
             Gizmos.DrawWireSphere(node, 0.5f);
         }
+    }
+
+    void GoToNextPoint()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        if (patrolPoints.Length == 0)
+        {
+            return;
+        }
+
+        // go to current destination
+        agent.destination = patrolPoints[destPoint].position;
+
+        // choose next patrol point as destination
+        destPoint = Random.Range(0, patrolPoints.Length);
     }
 }

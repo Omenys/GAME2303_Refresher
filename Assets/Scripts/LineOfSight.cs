@@ -12,10 +12,13 @@ public class LineOfSight : MonoBehaviour
     [SerializeField] Transform target;
     GuardState state = GuardState.IDLE;
 
+    bool playerInSight = false;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        // initial guard state
+        state = GuardState.PATROL;
     }
 
     // Update is called once per frame
@@ -52,6 +55,14 @@ public class LineOfSight : MonoBehaviour
     void UpdatePatrol()
     {
         Debug.Log("Patroling");
+        if (!playerInSight)
+        {
+            state = GuardState.PATROL;
+        }
+        else
+        {
+            state = GuardState.PURSUE;
+        }
     }
 
     void UpdateInvestigate()
